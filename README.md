@@ -9,17 +9,3 @@ no API for decompressing tweak_check.
 support only strauss_batch for batch verification.
 no callback func and callback data.
 
-
-#include <bits/stdc++.h>
-using namespace std;
-//working with banman class to add 
-int main()
-{
-    //including functions like 
-    //BanAsn()
-    //UnBanAsn()
-    //ClearBannedAsn()
-    //ClearBannedAsn()
-    //DumpAsnBanlist()
-    //
-}
