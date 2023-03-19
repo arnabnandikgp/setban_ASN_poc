@@ -32,7 +32,7 @@ To make this happen we need to make suitable API s for accessing the bannedasnli
 
 Since in https://github.com/bitcoin/bitcoin/blob/master/src/util/asmap.cpp we have uint_32 datatype as output for the interpret function hence it will be suitable to stick to it and use the uint_32 datatype when handling ASNs.
 ```C
-uint32_t netAsn;
+uint32_t Asn;
 ```
 
 Adding the following methods and objects in the Banman class in order to ban ASNs using the asmap provided like changing the .Isbanned() method to encompass functionalities like banning peers that have a given ASN.
