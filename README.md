@@ -35,11 +35,17 @@ We also need to implement the equivalent disconnectnode() method for our project
 
 Also calling the disconnectnode() method to immediately execute the ban request.
 
+Design Decisions
+---
+1. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in 'cconnma:: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
+2. When any peer belonging to any banned AS tries to connect due to additional checks implemented in the IsBanned method it will not be able to connect to it. 
+3. I have made the decision to store the list of banneds in the disk in the likes of bannedlist.dat used for storing the banned IP addresses.
+
 Checklist
 ---
 Make sure the following are in the final implementation.  
-- [ ] All the new methods described in the POC for the Banman class 
-- [ ] Modifying the setban rpc to handle arguments in the form of ASNs
+- [ ] All the new methods described in the POC for the Banman class to use the proposed baannedaslist.dat
+- [ ] Modifying the setban RPC to handle arguments in the form of ASNs
 - [ ] Making sure that the after adding an ASN to the bannedas list all the peers belonging to the AS get disconnected 
 
 
