@@ -31,7 +31,9 @@ There can be an another way too, that is using the bannedlist.dat used for stori
 To make this happen we need to make suitable API s for accessing the bannedasnlist.dat from the disk as well as make functions to modify its content.
 
 Since in https://github.com/bitcoin/bitcoin/blob/master/src/util/asmap.cpp we have uint_32 datatype as output for the interpret function hence it will be suitable to stick to it and use the uint_32 datatype when handling ASNs.
-
+```C
+uint32_t netAsn;
+```
 
 Adding the following methods and objects in the banman class in order to ban ASNs using the asmap provided like changing the .Isbanned() method to encompass functionalities like banning peers that have a given ASN.
 
