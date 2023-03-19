@@ -16,7 +16,12 @@ So we can take the input and make an additional test and make a flag variable li
 As follows:
 
 
-
+```C
+if (request.params[0].get_str().find('.') != std::string::npos)
+        isAS = true;
+    else
+        isIP = true;
+```
 
 Since there is already a banlist.dat in the local directory that stores the list of banned ip addresses it will be good to either integrate the data of banned ASNs into it or maybe make a new memory file to store the data of banned ASNs.
 The above proposal is a bit bold as I know the fact that it will not be easy to get all the bitcoin developers to agreement on building a new local file to store the list of banned list of ASN .
@@ -49,6 +54,15 @@ private:
 ```
 
 We also need to implement the equivalent disconnectnode() method for our project as we need to ensure that after placing the ASN in the banned list if there are any peers belonging to that AS should be disconnected immediately.
+
+```C
+    std::vector<uint8_t> ip = net_addr.GetGroup(); // what is the 
+    uint32_t Asn=Interpret(asmap,ip);    //interpret function defined in asmap.cpp
+    if(IsAsBanned(Asn))
+    {
+        return true;
+    }
+```
 
 Also calling the disconnectnode() method to immediately execute the ban request.
 
