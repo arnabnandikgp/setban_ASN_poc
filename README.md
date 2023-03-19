@@ -35,8 +35,16 @@ We also need to implement the equivalent disconnectnode() method for our project
 
 Also calling the disconnectnode() method to immediately execute the ban request.
 
+Checklist
+---
+Make sure the following are in the final implementation.  
+- [ ] All the new methods described in the POC for the Banman class 
+- [ ] Modifying the setban rpc to handle arguments in the form of ASNs
+- [ ] Making sure that the after adding an ASN to the bannedas list all the peers belonging to the AS get disconnected 
+
+
 Doubts
 ---
 Doubts:
 1. Are there any checks to validate whether input ASN is valid or not, in the likes of methods like lookuphost and lookupsubnet for the IP addresses.
-2. Is there any way trough which we can make the 
+2. Is there any way trough which we may use the bannedlst.dat for also storing the banned ASNs.
