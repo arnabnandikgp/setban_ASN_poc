@@ -35,7 +35,7 @@ Since in https://github.com/bitcoin/bitcoin/blob/master/src/util/asmap.cpp we ha
 uint32_t netAsn;
 ```
 
-Adding the following methods and objects in the banman class in order to ban ASNs using the asmap provided like changing the .Isbanned() method to encompass functionalities like banning peers that have a given ASN.
+Adding the following methods and objects in the Banman class in order to ban ASNs using the asmap provided like changing the .Isbanned() method to encompass functionalities like banning peers that have a given ASN.
 
 ```C
 public:
