@@ -27,9 +27,16 @@ To make this happen we need to make suitable API s for accessing the bannedasnli
 
 Since in https://github.com/bitcoin/bitcoin/blob/master/src/util/asmap.cpp we have uint_32 datatype as output for the interpret function hence it will be suitable to stick to it and use the uint_32 datatype when handling ASNs.
 
+
+
 Adding the following methods and objects in the banman class in order to ban ASNs using the asmap provided like changing the .isbanned() method to encompass functionalities like banning peers that have a given ASN.
 
 We also need to implement the equivalent disconnectnode() method for our project as we need to ensure that after placing the ASN in the banned list if there are any peers belonging to that AS should be disconnected immediately.
 
 Also calling the disconnectnode() method to immediately execute the ban request.
 
+Doubts
+---
+Doubts:
+1. Are there any checks to validate whether input ASN is valid or not, in the likes of methods like lookuphost and lookupsubnet for the IP addresses.
+2. Is there any way trough which we can make the 
