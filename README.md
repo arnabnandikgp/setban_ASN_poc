@@ -28,8 +28,25 @@ To make this happen we need to make suitable API s for accessing the bannedasnli
 Since in https://github.com/bitcoin/bitcoin/blob/master/src/util/asmap.cpp we have uint_32 datatype as output for the interpret function hence it will be suitable to stick to it and use the uint_32 datatype when handling ASNs.
 
 
-
 Adding the following methods and objects in the banman class in order to ban ASNs using the asmap provided like changing the .isbanned() method to encompass functionalities like banning peers that have a given ASN.
+
+```C
+public:
+    ~BanMan();
+    BanMan(fs::path ban_file, CClientUIInterface* client_interface, int64_t default_ban_time);
+    void BanAsn(const uint32_t Asn, int64_t ban_time_offset = 0, bool since_unix_epoch = false);
+    void ClearBannedAs();
+    bool IsAsBanned(const uint32_t Asn);
+    bool UnbanAsn(const uint32_t Asn);
+    void GetBannedAs(banmap_t& banmap);
+    void DumpBanAslist();
+
+private:
+    void LoadBanAslist() EXCLUSIVE_LOCKS_REQUIRED(!m_cs_bannedas);
+    bool BannedSAsetIsDirty();
+    void SetBannedSetDirty(bool dirty = true);
+    void SweepBannedAs() EXCLUSIVE_LOCKS_REQUIRED(m_cs_bannedas);
+```
 
 We also need to implement the equivalent disconnectnode() method for our project as we need to ensure that after placing the ASN in the banned list if there are any peers belonging to that AS should be disconnected immediately.
 
