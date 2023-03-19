@@ -1,4 +1,4 @@
-# setban_ASN_poc
+# Setban_ASN_poc
 This is a proof of concept for the batch object proposed in this comment. There are also some discussions here.
 I made the following decisions to simplify the implementation of this PoC:
 
