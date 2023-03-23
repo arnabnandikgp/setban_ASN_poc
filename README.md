@@ -72,7 +72,7 @@ Design Decisions
 ---
 1. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in '   'Cconnman:: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
 2. When any peer belonging to any banned AS tries to connect due to additional checks implemented in the IsBanned method it will not be able to connect to it. 
-3. I have made the decision to store the list of banneds in the disk in the likes of bannedlist.dat used for storing the banned IP addresses.
+3. I have made the decision to store the list of bannedAs in the disk in the likes of bannedlist.dat used for storing the banned IP addresses.
 
 Checklist
 ---
