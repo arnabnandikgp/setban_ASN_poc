@@ -10,7 +10,14 @@ support only strauss_batch for batch verification.
 no callback func and callback data.
 
 To take the input of an ASN and make it clear that it is an ASN and not a ip address.
-We can take motivation from the fact that the existing setban rpc takes into account that there are / in a subnet address and thus separates subnet masks and individual host addresses in the following ways.
+We can take motivation from the fact that the existing setban rpc takes into account that there are / in a subnet address and thus separates subnet masks and individual host addresses by checking whether there is a '/' in the input or not, as follows:
+
+```C
+bool isSubnet = false;
+
+if (request.params[0].get_str().find('/') != std::string::npos)
+isSubnet = true;
+```
 
 So we can take the input and make an additional test and make a flag variable like for example isAS and if there are no dots in the parsed string then we can come to the conclusion that it is an ASN rather than a host address or a subnet mask
 As follows:
