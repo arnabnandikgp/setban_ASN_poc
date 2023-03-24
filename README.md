@@ -35,6 +35,41 @@ The above proposal is a bit bold as I know the fact that it will not be easy to 
 
 There can be an another way too, that is using the bannedlist.dat used for storing the list of banned IPs to also store the the list of banned ASNs but I am not sure how to read and write two different categories of data from a single binary file.
 
+So just like when connecting to peers the addrman first loads the content of bannedlist.dat of banned IP addresses in a map “m_banned” we will load it onto a map “m_banned_As”.
+
+As discussed earlier since we need to make suitable changes in the “IsBanned: method in order to detect IP addresses that were not explicitly banned but belong to a banned ASN, and to facilitate it checking for the contents of the m_banned_As we can have an “IsBannedAs” method to check in the continents of the banned AS list,[here](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp#L55)
+
+```C
+bool BanMan::IsBanned(const CNetAddr& net_addr)
+{
+    // is it there is the banned list of ips
+    auto current_time = GetTime();
+    LOCK(m_cs_bannedas);
+    for (const auto& it : m_bannedas) {
+        CSubNet sub_net = it.first;
+        CBanEntry ban_entry = it.second;
+
+        if (current_time < ban_entry.nBanUntil && sub_net.Match(net_addr)) {
+            return true;
+        }
+    }
+
+    std::vector<uint8_t> ip = net_addr.GetGroup(); // what is the 
+    uint32_t Asn=Interpret(asmap,ip);    //interpret function defined in asmap.cpp
+    if(IsAsBanned(Asn))
+    {
+        return true;
+    }
+    return false;
+}
+bool BanMan::IsBannedAs(std::uint32_t Asn)
+{
+    // returns true if the asn is in the banned list
+    // will iterarte over all entries of the bannedasn list and return true if there and false otherwise. 
+}
+
+```
+
 To make my proposal plan of making a separate file for storing all the banned ASNs happen we need to make suitable API s for accessing the bannedaslist.dat from the disk as well as make functions to modify its content just like the bannnedlist.dat for regular addresses. I have set out the basic structures of the additional APIs we will be requiring in the [banman.h](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.h) and [banman.cpp](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp) files.
 
 Since in https://github.com/bitcoin/bitcoin/blob/master/src/util/asmap.cpp we have uint_32 datatype as output for the `Interpret` function hence it will be suitable to stick to it and use the uint_32 datatype when handling ASNs.
