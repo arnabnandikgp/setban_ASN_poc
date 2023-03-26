@@ -121,7 +121,7 @@ Checklist
 Make sure the following are in the final implementation.  
 - [ ] All the new methods described in the POC for the Banman class to use the proposed baannedaslist.dat
 - [ ] Modifying the setban RPC to handle arguments in the form of ASNs
-- [ ] Making sure that the after adding an ASN to the bannedas list all the peers belonging to the AS get disconnected 
+- [ ] Making sure that the after adding an ASN to the bannedAs list all the already connected peers belonging to that AS get disconnected immediately.
 
 
 Doubts
