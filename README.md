@@ -1,5 +1,5 @@
 # Setban_ASN_poc
-This is a proof of concept for the proposed expansion of the setban rpc to process ASNs and ban them just like IP addresses. There are also some discussions here.
+This is a proof of concept for the proposed expansion of the setban RPC to process ASNs and ban them just like IP addresses. There are also some discussions here.
 I made the following decisions to simplify the implementation of this PoC:
 
 making a new binary file to store the banned ASNs
