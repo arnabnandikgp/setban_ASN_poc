@@ -81,7 +81,7 @@ int main()
 
     else
     {
-        netAsn = f(request.params[0].get_str()) // function to convert the input into a netAsn object
+        netAsn = stoi(request.params[0].get_str()) //changing the string input to integer datatype.
                                                 // now checking for the input command to add or remove or to delete
             if (strCommand == "add")
         {
