@@ -94,7 +94,7 @@ private:
 ```
 
 We also need to  ensure that after placing the ASN in the banned list if there are any peers belonging to that AS should be disconnected immediately.
-For that we take motivations from the disconnectnode method used for immediatetly disconnecting a peer with a given address. I intend to implement the following in the setban RPC in [net.cpp](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/net.cpp#L111)
+For that we take motivations from the [disconnectnode](https://doxygen.bitcoincore.org/net_8cpp_source.html#l02853) method used for immediatetly disconnecting a peer with a given address. I intend to implement the following in the setban RPC in [net.cpp](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/net.cpp#L111)
 
 ```C
  for (CNode *pnode : m_nodes)
