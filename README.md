@@ -2,7 +2,7 @@
 This is a proof of concept for the proposed expansion of the setban RPC to process ASNs and ban them just like IP addresses. There are also some discussions here.
 I made the following decisions to simplify the implementation of this PoC:
 
-making a new binary file to store the banned ASNs
+1.Making a new binary file to store the banned ASNs
 API for retrieving and add data into the new binary file
 Making relevent changes in the IsBanned() API to allow bucketing for addrman.h
 
