@@ -93,10 +93,19 @@ private:
     void SweepBannedAs() EXCLUSIVE_LOCKS_REQUIRED(m_cs_bannedas);
 ```
 
-We also need to implement the equivalent disconnectnode() method for our project as we need to ensure that after placing the ASN in the banned list if there are any peers belonging to that AS should be disconnected immediately.
+We also need to  ensure that after placing the ASN in the banned list if there are any peers belonging to that AS should be disconnected immediately.
+For that we take motivations from the disconnectnode method used for immediatetly disconnecting a peer with a given address. I intend to implement the following in the setban RPC in [net.cpp](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/net.cpp#L111)
 
-Also calling the disconnectnode() method to immediately execute the ban request.
-
+```C
+ for (CNode *pnode : m_nodes)
+            {
+                if(Interpret(asmap,(pnode->addr).GetGroup())==stoi(request.params[0]))
+                {
+                    // LogPrint(BCLog::NET, "disconnect by subnet%s matched peer=%d; disconnecting\n", (fLogIPs ? strprintf("=%s", subnet.ToString()) : ""), pnode->GetId());
+                    pnode->fDisconnect = true;
+                }
+            }
+```
 
 Checklist
 ---
