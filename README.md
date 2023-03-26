@@ -1,10 +1,10 @@
 # Setban_ASN_poc
 This is a proof of concept for the proposed expansion of the setban RPC to process ASNs and ban them just like IP addresses. There are also some discussions here.
-I made the following decisions to simplify the implementation of this PoC:
-
-1.Making a new binary file to store the banned ASNs
-API for retrieving and add data into the new binary file
-Making relevent changes in the IsBanned() API to allow bucketing for addrman.h
+Design Decisions
+---
+1. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in '   'Cconnman:: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
+2. When any peer belonging to any banned AS tries to connect due to additional checks implemented in the IsBanned method it will not be able to connect to it. 
+3. Making a new binary file to store the banned ASNs API for retrieving and add data into the new binary file Making relevent changes in the IsBanned() API to allow bucketing for addrman.hI have made the decision to store the list of bannedAs in the disk in the likes of bannedlist.dat used for storing the banned IP addresses.
 
 To take the input of an ASN and make it clear that it is an ASN and not a IP address.
 We can take motivation from the fact that the existing setban RPC takes into account that there are / in a subnet address and thus separates subnet masks and individual host addresses by checking whether there is a '/' in the input or not, as follows:
