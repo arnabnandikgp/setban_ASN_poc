@@ -1,5 +1,7 @@
 # Setban_ASN_poc
+
 This is a proof of concept for the proposed expansion of the setban RPC to process ASNs and ban them just like IP addresses. There are also some discussions here.
+
 Design Decisions
 ---
 1. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in '   'Cconnman:: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
