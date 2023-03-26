@@ -10,7 +10,7 @@ support only strauss_batch for batch verification.
 no callback func and callback data.
 
 To take the input of an ASN and make it clear that it is an ASN and not a IP address.
-We can take motivation from the fact that the existing setban rpc takes into account that there are / in a subnet address and thus separates subnet masks and individual host addresses by checking whether there is a '/' in the input or not, as follows:
+We can take motivation from the fact that the existing setban RPC takes into account that there are / in a subnet address and thus separates subnet masks and individual host addresses by checking whether there is a '/' in the input or not, as follows:
 
 ```C
 bool isSubnet = false;
