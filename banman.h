@@ -30,20 +30,9 @@ public:
     ~BanMan();
     BanMan(fs::path ban_file, CClientUIInterface* client_interface, int64_t default_ban_time);
     void BanAsn(const uint32_t Asn, int64_t ban_time_offset = 0, bool since_unix_epoch = false);
-    // void Discourage(const CNetAddr& net_addr);
     void ClearBannedAs();
-
-    //! Return whether net_addr is banned
     bool IsAsBanned(const uint32_t Asn);
-
-    //! Return whether sub_net is exactly banned
-    // bool IsBanned(const CSubNet& sub_net);
-
-    //! Return whether net_addr is discouraged.
-    // bool IsDiscouraged(const CNetAddr& net_addr);
-
     bool UnbanAsn(const uint32_t Asn);
-    // bool Unban(const CSubNet& sub_net);
     void GetBannedAs(banmap_t& banmap);
     void DumpBanAslist();
 
@@ -59,7 +48,6 @@ private:
     CClientUIInterface* mas_client_interface = nullptr;
     CBanDB mas_ban_db;
     const int64_t mas_default_ban_time;
-    // CRollingBloomFilter m_discouraged GUARDED_BY(m_cs_banned) {50000, 0.000001};
 };
 
 #endif // BITCOIN_BANMAN_H
