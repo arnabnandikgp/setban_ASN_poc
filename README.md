@@ -4,11 +4,11 @@ This is a proof of concept for the proposed expansion of the setban RPC to proce
 
 Design Decisions
 ---
-1. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in '   'Cconnman:: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
-2. When any peer belonging to any banned AS tries to connect due to additional checks implemented in the IsBanned method it will not be able to connect to it. 
-3. Making a new binary file to store the banned ASNs API for retrieving and add data into the new binary file Making relevent changes in the IsBanned() API to allow bucketing for addrman.hI have made the decision to store the list of bannedAs in the disk in the likes of bannedlist.dat used for storing the banned IP addresses.
+1. Making a new binary file to store the banned ASNs into the new binary file in the likes of bannedlist.dat used for storing the banned IP addresses.//////Making relevent changes in the IsBanned() API to allow bucketing for addrman.hI have made the decision to store the list of bannedAs in the disk 
+2. Will implement additional checks in the IsBanned method so that any peer belonging to a banned AS is not connected to.
+3. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in '   'Cconnman:: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
 
-To take the input of an ASN and make it clear that it is an ASN and not a IP address.
+To take the input as an ASN into the setban RPC we need to make it clear that it is an ASN and not a IP address.
 We can take motivation from the fact that the existing setban RPC takes into account that there are / in a subnet address and thus separates subnet masks and individual host addresses by checking whether there is a '/' in the input or not, as follows:
 
 ```C
@@ -18,7 +18,7 @@ if (request.params[0].get_str().find('/') != std::string::npos)
 isSubnet = true;
 ```
 
-So we can take the input and make an additional test and make a flag variable like for example isAS and if there are no dots in the parsed string then we can come to the conclusion that it is an ASN rather than a host address or a subnet mask
+So we can take the input and make an additional test and make a flag variable like for example isAS and if there are no dots in the parsed string since ASNs do not contain any then we can come to the conclusion that it is an ASN rather than a host address or a subnet mask
 As follows:
 
 
@@ -28,13 +28,10 @@ if (request.params[0].get_str().find('.') != std::string::npos)
     else
         isIP = true;
 ```
+I have made a bold design desicion to make a new loacal binary file to store the list of the banned ASNs.This proposal is a bit bold as I know the fact that it will not be easy to get all the bitcoin developer community to agreement on building a new local file to store the list of banned list of ASN.
+But my design proposal of making a new bianary is also valid from the fact that each user will have a different set of banned ASNs and just like the banned addresses list which is stred in local as binary file we will require a similar arrangement for the ASNs too. Also there is a possibility of using the same binary file i.e bannedlist.dat which currently stores the list of banned addresses to lso store the list of banned ASNs. Though I am not sure how to read and write two different categories of data from a single binary file.
 
-Since there is already a banlist.dat in the local directory that stores the list of banned ip addresses it will be good to either integrate the data of banned ASNs into it or maybe make a new memory file to store the data of banned ASNs.
-The above proposal is a bit bold as I know the fact that it will not be easy to get all the bitcoin developers to agreement on building a new local file to store the list of banned list of ASN .
-
-There can be an another way too, that is using the bannedlist.dat used for storing the list of banned IPs to also store the the list of banned ASNs but I am not sure how to read and write two different categories of data from a single binary file.
-
-So just like when connecting to peers the addrman first loads the content of bannedlist.dat of banned IP addresses in a map “m_banned” we will load it onto a map “m_banned_As”.
+Neverthelss in which binary file we will be storing our list of banned ASNs we will then load the contents of it onto a map with name say called “m_banned_As” just like when connecting to peers the addrman first loads the content of bannedlist.dat of banned IP addresses onto a map “m_banned”.
 
 As discussed earlier since we need to make suitable changes in the “IsBanned: method in order to detect IP addresses that were not explicitly banned but belong to a banned ASN, and to facilitate it checking for the contents of the m_banned_As we can have an “IsBannedAs” method to check in the continents of the banned AS list,[here](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp#L55)
 
@@ -98,22 +95,8 @@ private:
 
 We also need to implement the equivalent disconnectnode() method for our project as we need to ensure that after placing the ASN in the banned list if there are any peers belonging to that AS should be disconnected immediately.
 
-```C
-    std::vector<uint8_t> ip = net_addr.GetGroup(); // what is the 
-    uint32_t Asn=Interpret(asmap,ip);    //interpret function defined in asmap.cpp
-    if(IsAsBanned(Asn))
-    {
-        return true;
-    }
-```
-
 Also calling the disconnectnode() method to immediately execute the ban request.
 
-Design Decisions
----
-1. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in '   'Cconnman:: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
-2. When any peer belonging to any banned AS tries to connect due to additional checks implemented in the IsBanned method it will not be able to connect to it. 
-3. I have made the decision to store the list of bannedAs in the disk in the likes of bannedlist.dat used for storing the banned IP addresses.
 
 Checklist
 ---
