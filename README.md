@@ -28,12 +28,12 @@ if (request.params[0].get_str().find('.') != std::string::npos)
     else
         isIP = true;
 ```
-I have made a bold design desicion to make a new local binary file to store the list of the banned ASNs.This proposal is a bit bold as I know the fact that it will not be easy to get all the bitcoin developer community to agreement on building a new local file to store the list of banned list of ASN.
-But my design proposal of making a new binary is also valid from the fact that each user will have a different set of banned ASNs and just like the banned addresses list which is stred in local as binary file we will require a similar arrangement for the ASNs too. Also there is a possibility of using the same binary file i.e bannedlist.dat which currently stores the list of banned addresses to lso store the list of banned ASNs. Though I am not sure how to read and write two different categories of data from a single binary file.
+I have made a bold design decision to make a new local binary file to store the list of the banned ASNs.This proposal is a bit bold as I know the fact that it will not be easy to get all the bitcoin developer community to agreement on building a new local file to store the list of banned list of ASN.
+But my design proposal of making a new binary is also valid from the fact that each user will have a different set of banned ASNs and just like the banned addresses list which is stored in local as binary file we will require a similar arrangement for the ASNs too. Also there is a possibility of using the same binary file i.e bannedlist.dat which currently stores the list of banned addresses to also store the list of banned ASNs. Though I am not sure how to read and write two different categories of data from a single binary file.
 
-Neverthelss in which binary file we will be storing our list of banned ASNs we will then load the contents of it onto a map with name say called “m_banned_As” just like when bucketing for peers the addrman first loads the content of bannedlist.dat of banned IP addresses onto a map “m_banned”.
+Nevertheless in which binary file we will be storing our list of banned ASNs we will then load the contents of it onto a map with name say called “m_banned_As” just like when bucketing for peers the addrman first loads the content of bannedlist.dat of banned IP addresses onto a map nammed “m_banned”.
 
-As discussed earlier since we need to make suitable changes in the “IsBanned: method in order to detect IP addresses that were not explicitly banned but belong to a banned ASN, and to facilitate it checking for the contents of the m_banned_As we can have an “IsBannedAs” method to check in the continents of the banned AS list,[here](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp#L55)
+As discussed earlier since we need to make suitable changes in the “IsBanned" method in order to detect IP addresses that were not explicitly banned but belong to a banned ASN, and to facilitate it checking for the contents of the m_banned_As we can have an “IsBannedAs” method to check in the continents of the banned AS list,[here](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp#L55)
 
 ```C
 bool BanMan::IsBanned(const CNetAddr& net_addr)
@@ -112,7 +112,7 @@ Checklist
 Make sure the following are in the final implementation.  
 - [ ] All the new methods described in the POC for the Banman class to use the proposed bannedaslist.dat
 - [ ] Modifying the setban RPC to handle arguments in the form of ASNs
-- [ ] Making sure that the after adding an ASN to the bannedAs list all the already connected peers belonging to that AS get disconnected immediately.
+- [ ] Making sure that after adding an ASN to the bannedAs list all the already connected peers belonging to that AS get disconnected immediately.
 
 
 Doubts
