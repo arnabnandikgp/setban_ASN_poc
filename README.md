@@ -5,9 +5,6 @@ I made the following decisions to simplify the implementation of this PoC:
 making a new binary file to store the banned ASNs
 API for retrieving and add data into the new binary file
 Making relevent changes in the IsBanned() API to allow bucketing for addrman.h
-no API for decompressing tweak_check.
-support only strauss_batch for batch verification.
-no callback func and callback data.
 
 To take the input of an ASN and make it clear that it is an ASN and not a IP address.
 We can take motivation from the fact that the existing setban RPC takes into account that there are / in a subnet address and thus separates subnet masks and individual host addresses by checking whether there is a '/' in the input or not, as follows:
