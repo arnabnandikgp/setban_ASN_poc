@@ -103,5 +103,5 @@ Make sure the following are in the final implementation.
 Doubts
 ---
 Doubts:
-1. Are there any checks to validate whether input ASN is valid or not, in the likes of methods like lookuphost and lookupsubnet for the IP addresses.
-2. Is there any way trough which we may use the bannedlst.dat for also storing the banned ASNs.
+1. Are there any checks to validate whether input ASN is valid or not, in the likes of methods like IsValid for the IP addresses.
+2. Should we use the uint32_t datatype for handling ASNs or make a separate class like CSubNet and CNetAddr with added methods and variables.
