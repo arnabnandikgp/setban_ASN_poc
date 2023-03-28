@@ -28,45 +28,30 @@ if (request.params[0].get_str().find('.') != std::string::npos)
     else
         isIP = true;
 ```
-I have made a bold design decision to make a new local binary file to store the list of the banned ASNs.This proposal is a bit bold as I know the fact that it will not be easy to get all the bitcoin developer community to agreement on building a new local file to store the list of banned list of ASN.
-But my design proposal of making a new binary is also valid from the fact that each user will have a different set of banned ASNs and just like the banned addresses list which is stored in local as binary file we will require a similar arrangement for the ASNs too. Also there is a possibility of using the same binary file i.e bannedlist.dat which currently stores the list of banned addresses to also store the list of banned ASNs. Though I am not sure how to read and write two different categories of data from a single binary file.
+Just like how singulat host addresses and subnetmasks are stored together into the bannedlist.dat binary file, we can also include the ASN mappings in it too. Hence we will be using the same local binary file to store the list of banned IP addresses as well as ASNs.
 
-Nevertheless in which binary file we will be storing our list of banned ASNs we will then load the contents of it onto a map with name say called “m_banned_As” just like when bucketing for peers the addrman first loads the content of bannedlist.dat of banned IP addresses onto a map nammed “m_banned”.
-
-As discussed earlier since we need to make suitable changes in the “IsBanned" method in order to detect IP addresses that were not explicitly banned but belong to a banned ASN, and to facilitate it checking for the contents of the m_banned_As we can have an “IsBannedAs” method to check in the continents of the banned AS list,[here](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp#L55)
+As discussed earlier since we need to make suitable changes in the “IsBanned" method in order to detect IP addresses that were not explicitly banned but belong to a banned ASN [here](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp#L55)
 
 ```C
-bool BanMan::IsBanned(const CNetAddr& net_addr)
+bool BanMan::IsBanned(const uint32_t &Asn) // again analogous to CSubNet object implementation
 {
-    // is it there is the banned list of ips
     auto current_time = GetTime();
-    LOCK(m_cs_bannedas);
-    for (const auto& it : m_bannedas) {
-        CSubNet sub_net = it.first;
-        CBanEntry ban_entry = it.second;
-
-        if (current_time < ban_entry.nBanUntil && sub_net.Match(net_addr)) {
+    LOCK(m_cs_banned);
+    banmap_t::iterator i = m_banned.find(Asn);
+    if (i != m_banned.end())
+    {
+        CBanEntry ban_entry = (*i).second;
+        if (current_time < ban_entry.nBanUntil)
+        {
             return true;
         }
     }
-
-    std::vector<uint8_t> ip = net_addr.GetGroup(); // what is the 
-    uint32_t Asn=Interpret(asmap,ip);    //interpret function defined in asmap.cpp
-    if(IsAsBanned(Asn))
-    {
-        return true;
-    }
     return false;
-}
-bool BanMan::IsBannedAs(std::uint32_t Asn)
-{
-    // returns true if the asn is in the banned list
-    // will iterarte over all entries of the bannedasn list and return true if there and false otherwise. 
 }
 
 ```
 
-To make my proposal plan of making a separate file for storing all the banned ASNs happen we need to make suitable API s for accessing the bannedaslist.dat from the disk as well as make functions to modify its content just like the bannnedlist.dat for regular addresses. I have set out the basic structures of the additional APIs we will be requiring in the [banman.h](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.h) and [banman.cpp](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp) files.
+To make my proposal plan of using the same binary  file for storing all the banned ASNs happen we need to make suitable API s for accessing the bannedlist.dat from the disk as well as make functions to modify its content. I have set out the basic structures of the additional APIs we will be requiring in the [banman.h](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.h) and [banman.cpp](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp) files.
 
 Since in https://github.com/bitcoin/bitcoin/blob/master/src/util/asmap.cpp we have uint_32 datatype as output for the `Interpret` function hence it will be suitable to stick to it and use the uint_32 datatype when handling ASNs.
 ```C
@@ -79,18 +64,18 @@ Adding the following methods and objects in the Banman class in order to ban ASN
 public:
     ~BanMan();
     BanMan(fs::path ban_file, CClientUIInterface* client_interface, int64_t default_ban_time);
-    void BanAsn(const uint32_t Asn, int64_t ban_time_offset = 0, bool since_unix_epoch = false);
-    void ClearBannedAs();
-    bool IsAsBanned(const uint32_t Asn);
-    bool UnbanAsn(const uint32_t Asn);
-    void GetBannedAs(banmap_t& banmap);
-    void DumpBanAslist();
+    void Ban(const uint32_t Asn, int64_t ban_time_offset=0 , bool since_unix_epoch = false);
+    void ClearBanned();
+    bool IsBanned(const uint32_t Asn);
+    bool Unban(const uint32_t Asn);
+    void GetBanned(banmap_t& banmap);
+    void DumpBanlist();
 
 private:
-    void LoadBanAslist() EXCLUSIVE_LOCKS_REQUIRED(!m_cs_bannedas);
-    bool BannedSAsetIsDirty();
+    void LoadBanlist() EXCLUSIVE_LOCKS_REQUIRED(!m_cs_bannedas);
+    bool BannedSetIsDirty();
     void SetBannedSetDirty(bool dirty = true);
-    void SweepBannedAs() EXCLUSIVE_LOCKS_REQUIRED(m_cs_bannedas);
+    void SweepBanned() EXCLUSIVE_LOCKS_REQUIRED(m_cs_bannedas);
 ```
 
 We also need to  ensure that after placing the ASN in the banned list if there are any peers belonging to that AS should be disconnected immediately.
