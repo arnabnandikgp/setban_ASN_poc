@@ -91,6 +91,14 @@ For that we take motivations from the [disconnectnode](https://doxygen.bitcoinco
                 }
             }
 ```
+Tests
+---
+All the tests related to the setban and related functionalities are at test/functional/p2p_disconnect_ban.py and rpc_setban.py.
+For instance following are the tests that are needed to be added in p2p_disconnect_ban.py
+1. Checking whether setban is able to add an ASN to the banned list.
+2. Are the nodes belonging to a banned AS getting disconnected after their addition to the list.
+
+
 
 Checklist
 ---
