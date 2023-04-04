@@ -33,7 +33,7 @@ class DisconnectBanTest(BitcoinTestFramework):
         self.nodes[1].setban(subnet="127.0.0.1", command="add",)
         assert_equal(len(self.nodes[1].listbanned()), 2)
         
-
+        #need to include a test that will depend on the design decisions made during the project of whether to ban an IP while it's AS is already banned.
 
         self.log.info("setban: fail to ban  AS with past absolute timestamp")
         assert_raises_rpc_error(error_code, "Error: Absolute timestamp is in the past", self.nodes[1].setban, "12345678", "add", 123, True)
