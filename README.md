@@ -84,7 +84,7 @@ For that we take motivations from the [disconnectnode](https://doxygen.bitcoinco
 ```C
  for (CNode *pnode : m_nodes)
             {
-                if(Interpret(asmap,(pnode->addr).GetGroup())==stoi(request.params[0]))
+                if(GetMappedAS(pnode->addr)==stoi(request.params[0]))
                 {
                     // LogPrint(BCLog::NET, "disconnect by subnet%s matched peer=%d; disconnecting\n", (fLogIPs ? strprintf("=%s", subnet.ToString()) : ""), pnode->GetId());
                     pnode->fDisconnect = true;
