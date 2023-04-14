@@ -133,7 +133,7 @@ using node::NodeContext;
             {                                           //taken motivation from Cconnman::DisConnectnode 
                for (CNode *pnode : m_nodes)
             {
-                if (Interpret(asmap, (pnode->addr).GetGroup()) == Asn)
+                if if(GetMappedAS(pnode->addr)==Asn)
                 {
                     pnode->fDisconnect = true;
                 }
