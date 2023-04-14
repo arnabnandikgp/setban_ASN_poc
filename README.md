@@ -98,7 +98,7 @@ For instance following are the tests that are needed to be added in p2p_disconne
 1. Checking whether setban is able to add an ASN to the banned list.
 2. Are the nodes belonging to a banned AS getting disconnected after their addition to the list.
 Here's a brief approach that we may employ for [p2p_disconnect_ban.py](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/p2p_disconnect_ban.py)
-```C
+```{python}
         self.connect_nodes(0, 1)  
 
         self.log.info("Test setban and listbanned RPCs")
