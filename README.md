@@ -141,7 +141,7 @@ Make sure the following are in the final implementation.
 - [ ] Modifying the setban RPC to handle arguments in the form of ASNs
 - [ ] Making sure that after banning an ASN, all the already connected peers belonging to that AS get disconnected immediately.
 - [ ] Adding relevent tests in p2p_disconnect_ban.py and rpc_setban.py files.
-- [ ] Modifying and checking for changes needed for files calling the modified methods, exploring the possibility of changes(if required) in qt.
+- [ ] Modifying and checking for changes needed for files calling the modified methods, exploring the possibility of changes in qt like for rpcconsole.
 
 
 Doubts
