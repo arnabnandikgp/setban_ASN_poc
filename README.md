@@ -4,7 +4,7 @@ This is a proof of concept for the proposed expansion of the setban RPC to proce
 
 Design Decisions
 ---
-1. Using the same binary file to store the banned ASNs.
+1. Using the same binary file to store the banned ASNs which is currently being used to store the banned IP's and subnets.
 2. Will implement additional checks in the IsBanned and oher methods to allow bucketing for addrman.h to not select any peer belonging to a banned AS.
 3. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in '   'Cconnman:: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
 
