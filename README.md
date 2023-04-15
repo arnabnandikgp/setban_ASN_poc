@@ -146,4 +146,4 @@ Make sure the following are in the final implementation.
 
 Doubts
 ---
-1. Are there any checks to validate whether input ASN is valid or not, in the likes of methods like IsValid for the IP addresses(though it checks only for the number after '/ to be less that 32) '.
+1. Are there any checks to validate whether input ASN is valid or not, in the likes of methods like IsValid for the IP addresses(though it checks only for the number after '/' to be less that 32).
