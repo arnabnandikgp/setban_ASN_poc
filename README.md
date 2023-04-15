@@ -148,5 +148,3 @@ Doubts
 ---
 Doubts:
 1. Are there any checks to validate whether input ASN is valid or not, in the likes of methods like IsValid for the IP addresses(though it checks only for the number after '/ to be less that 32) '.
-2. Should we use the uint32_t datatype for handling ASNs or make a separate class like CSubNet and CNetAddr with added methods and variables.
-3. will there be any implications of this project on the GUI i.e qt, I have gone through the codebase and wasn't able to find any possible implications of the same.
