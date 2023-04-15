@@ -28,7 +28,7 @@ if (request.params[0].get_str().find('.') != std::string::npos)
     else
         isIP = true;
 ```
-Just like how singulat host addresses and subnetmasks are stored together into the bannedlist.dat binary file, we can also include the ASN mappings in it too. Hence we will be using the same local binary file to store the list of banned IP addresses as well as ASNs.
+Just like how singular host addresses and subnetmasks are stored together into the bannedlist.dat binary file, we can also include the ASN mappings in it too. Hence we will be using the same local binary file to store the list of banned IP addresses as well as ASNs.
 
 As discussed earlier since we need to make suitable changes in the “IsBanned" method in order to detect IP addresses that were not explicitly banned but belong to a banned ASN [here](https://github.com/arnabnandikgp/setban_ASN_poc/blob/main/banman.cpp#L55)
 
