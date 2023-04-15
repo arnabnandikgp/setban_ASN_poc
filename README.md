@@ -137,7 +137,7 @@ Here's a brief approach that we may employ for [p2p_disconnect_ban.py](https://g
 Checklist
 ---
 Make sure the following are in the final implementation.  
-- [ ] All the new methods described in the POC for the Banman class to use the proposed bannedlist.dat
+- [ ] All the new methods described in the POC for the Banman class to use the bannedlist.dat
 - [ ] Modifying the setban RPC to handle arguments in the form of ASNs
 - [ ] Making sure that after banning an ASN, all the already connected peers belonging to that AS get disconnected immediately.
 - [ ] Adding relevent tests in p2p_disconnect_ban.py and rpc_setban.py files.
