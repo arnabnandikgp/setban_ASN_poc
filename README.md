@@ -18,7 +18,7 @@ if (request.params[0].get_str().find('/') != std::string::npos)
 isSubnet = true;
 ```
 
-So we can take the input and make an additional test and make a flag variable like for example isAS and if there are no dots in the parsed string since ASNs do not contain any then we can come to the conclusion that it is an ASN rather than a host address or a subnet mask
+So we can take the input and make an additional test and make a flag variable, like for example 'isAS' and if there are no dots in the parsed string since ASN's do not contain any then we can come to the conclusion that it is an ASN rather than a host address or a subnet mask.
 As follows:
 
 
@@ -146,5 +146,4 @@ Make sure the following are in the final implementation.
 
 Doubts
 ---
-Doubts:
 1. Are there any checks to validate whether input ASN is valid or not, in the likes of methods like IsValid for the IP addresses(though it checks only for the number after '/ to be less that 32) '.
