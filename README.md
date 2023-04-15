@@ -6,7 +6,7 @@ Design Decisions
 ---
 1. Using the same binary file to store the banned ASNs which is currently being used to store the banned IP's and subnets.
 2. Will implement additional checks in the IsBanned and oher methods to allow bucketing for addrman.h to not select any peer belonging to a banned AS.
-3. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in '   'Cconnman:: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
+3. To implement the feature of disconnecting an already connected peer which has AS belonging to banned AS list I have chosen to use the methods in '   'Cconnman :: DisconnectNode' in order to ban any peer by iterating through the list of connected nodes and disconnecting them.
 
 To take the input as an ASN into the setban RPC we need to make it clear that it is an ASN and not a IP address.
 We can take motivation from the fact that the existing setban RPC takes into account that there are / in a subnet address and thus separates subnet masks and individual host addresses by checking whether there is a '/' in the input or not, as follows:
